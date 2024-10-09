@@ -1,0 +1,107 @@
+body {
+    background: linear-gradient(0deg, #006699, #40b2b6 100%);
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 30px;
+}
+
+.header {
+    background-image: url(img/davebackground.png);
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+}
+
+/* display block para pantallas pequeñas // grid para grandes*/
+.basics {
+    display: block;
+    position: relative;
+    background-color: #008B8B;
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 2cm;
+    border-radius: 15px;
+    box-shadow: -5px 5px 25px #006b6b,
+        /* sombras para el cuadro*/
+        5px -5px 25px #00abab;
+    margin-bottom: 50px;
+}
+/* textos centrados para scroll vertical */
+div {
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+/* contenido con gifs de ejemplo */
+
+.wrapper {
+    display: block;
+    text-align: center;
+}
+
+img {
+    border-radius: 20px;
+    max-width: 100%;
+    /*La imagen encoge si no cabe en pantalla*/
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) /* sombra para las imágenes */
+
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+}
+
+.discord_link {
+    border-radius: 50px;
+}
+
+/* Estilos para tablet */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* Igual que en movil */
+
+}
+
+/* Estilos para alta resolucion */
+@media (min-width: 1024px) {
+    .wrapper{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    /* css grid modificado */
+    .basics {
+        margin: 50px;
+        display: grid;
+        grid-template-columns: 50%;
+        grid-template-rows: auto;
+        gap: 20px;
+        font-size: 20px;
+    }
+
+    .basics__title {
+        grid-column: span 2; /* ocupa ambas columnas para centrarse como título */
+    }
+
+    .basics__text {
+        grid-column: 1;
+    
+    }
+
+    .basics__image {
+        grid-column: 2;
+    }
+}

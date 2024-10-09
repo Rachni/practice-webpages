@@ -1,0 +1,179 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  cursor: url("img/cursor_normal.png"), auto; /* Cursor normal */
+}
+
+a, button,
+.add-to-cart,
+.nav-icon,
+.close-btn,
+.empty-btn { 
+  cursor: url("img/cursor_pointer.png"), pointer; /* Cursor pointer para enlaces */
+}
+/* Sección de productos */
+.section {
+  padding: 20px;
+  text-align: center;
+}
+
+.product-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#productos h2 {
+  font-size: 2em; /* Cambia el tamaño a tu preferencia */
+  color: #333; /* Color del texto */
+  font-weight: bold; /* Negrita */
+  text-align: center; /* Centrar el texto */
+}
+
+.product {
+  width: 25%;
+  float: left;
+  margin: 1.66%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.product:hover {
+  transform: scale(1.05);
+}
+
+.product-image {
+  width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  height: auto; /* Limita la altura de la imagen */
+  max-height: 300px;
+  object-fit: contain; /* Mantiene la imagen dentro del contenedor sin recortes */
+  border-radius: 8px;
+  transition: transform 0.3 ease;
+}
+.product-image-container:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 10px 0 40px;
+}
+
+.product-name {
+  font-size: 1.2em;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.product-description {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.product-price {
+  font-size: 1.1em;
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.add-to-cart {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px; /* Ajusta el padding horizontal */
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    bottom: 10px; /* 10px desde la parte inferior */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Para centrar */
+    width: calc(100% - 40px); /* Ancho total menos 40px (20px de cada lado) */
+    max-width: 220px; /* Opcional: limitar el ancho máximo del botón */
+  }
+
+.add-to-cart:hover {
+  background-color: #0b661f;
+}
+
+/* Aseguramos que las tarjetas flotantes no se salgan de la caja */
+.product-container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Limpiar los floats después de cada tercera tarjeta */
+.product:nth-child(3n + 1) {
+  clear: left;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+  }
+  .modal.active ~ * {
+    filter: blur(500px);
+}
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  .close-btn, .empty-btn {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+
+    margin: 5px;
+  }
+  .empty-btn{
+    background-color: #dc3545;
+  }
+  .empty-btn:hover{
+    background-color: #771e27;
+  }
+  .close-btn{
+    background-color: #9c9a9a;
+  }
+  
+.close-btn:hover{
+    background-color: #666;
+}
+  .modal li{
+    transition: background-color 0.3s ease;
+  }
+  .modal li:hover{
+    background-color: #E0F7F5;
+}
+/* Estilo responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .product {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  product-container {
+    max-width: 100%;
+  }
+}
