@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Final LoL World Championship 2024</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #0d1224;
+        color: #fff;
+        cursor: url('img/lollegacy.cur'), auto;
+      }
+
+      .header-bg {
+        background-image: url("img/worlds-header.png");
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      header {
+        background-color: rgba(26, 26, 26, 0.7);
+        color: #fff;
+        text-align: center;
+        padding: 2rem;
+        width: 100%;
+      }
+
+      main {
+        position: relative;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      #background-video {
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100vw;
+      height: 100vh; 
+      object-fit: cover; 
+      z-index: -1;
+    }
+
+
+      .content-overlay {
+        position: relative;
+        z-index: 1;
+        background-color: rgba(13, 18, 36, 0.8);
+        padding: 2rem;
+        border-radius: 10px;
+      }
+
+      .ticket-section {
+        background-color: #222f5b;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .buy-btn {
+        background-color: #946b2d;
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin: 1rem 0;
+        
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      .buy-btn:hover {
+        background-color: #b58335;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        color: #946b2d;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .card {
+        background-color: #222f5b;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        perspective: 1000px;
+        height: 300px;
+      }
+
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+
+      .card:hover .card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .card-front,
+      .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .card-front {
+        background-size: cover;
+        background-position: center;
+      }
+
+      .card-front::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+
+      .card-front h3 {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+      }
+
+      .card-back {
+        background-color: #0e1a40;
+        color: #946b2d;
+        transform: rotateY(180deg);
+      }
+
+      #card-teams .card-front {
+        background-image: url("img/blg-worlds2024.png");
+      }
+      #card-format .card-front {
+        background-image: url("img/600px-T1_Faker_Worlds_2024.jpg");
+      }
+      #card-prize .card-front {
+        background-image: url("img/worlds-cup.png");
+      }
+      #card-experience .card-front {
+        background-image: url("img/worlds-crowd.png");
+      }
+
+      footer {
+        background-color: #0e1a40;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal-content {
+        background-color: #222f5b;
+        color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #946b2d;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 10px;
+      }
+
+      .close {
+        color: #946b2d;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #b58335;
+        text-decoration: none;
+        
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      form input {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        border: 1px solid #946b2d;
+        background-color: #0e1a40;
+        color: #fff;
+        border-radius: 5px;
+      }
+
+      form button {
+        background-color: #946b2d;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      form button:hover {
+        background-color: #b58335;
+      }
+
+      #countdown {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #946b2d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-bg">
+      <header>
+        <h1>Final LoL World Championship 2024</h1>
+        <p>Sábado 2 de Noviembre 2024 - 14:00 - Estadio O2 de Londres</p>
+      </header>
+    </div>
+
+    <main>
+      <video autoplay muted loop id="background-video">
+        <source src="img/Worlds 2024 _ Make Them Believe - LoL Esports (720p, h264, youtube).mp4" type="video/mp4" />
+      </video>
+      <div class="content-overlay">
+        <div id="countdown"></div>
+        <section class="ticket-section">
+          <h2>Compra tu entrada para la Gran Final</h2>
+          <p>
+            El evento más importante del competitivo de League of Legends, los
+            Worlds 2024, está por llegar a su momento culminante:
+            <strong>la gran final</strong>.
+            <br />
+            No te pierdas la oportunidad de vivir en directo la final del LoL
+            World Championship 2024
+          </p>
+          <button class="buy-btn">Comprar Ticket</button>
+        </section>
+
+        <h2 class="section-title">Información del Evento</h2>
+        <div class="grid-container">
+          <div class="card" id="card-teams">
+            <div class="card-inner">
+              <div class="card-front">
+                <h3>Equipos Finalistas</h3>
+              </div>
+              <div class="card-back">
+                <p>
+                  Los dos mejores equipos del mundo se enfrentarán en una épica
+                  batalla por el título mundial y el prestigioso trofeo
+                  Summoner's Cup.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card" id="card-format">
+            <div class="card-inner">
+              <div class="card-front">
+                <h3>Formato</h3>
+              </div>
+              <div class="card-back">
+                <p>
+                  La final se jugará al mejor de 5 partidas (Bo5). El primer
+                  equipo en ganar 3 partidas se coronará campeón del mundo.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card" id="card-prize">
+            <div class="card-inner">
+              <div class="card-front">
+                <h3>Premios</h3>
+              </div>
+              <div class="card-back">
+                <p>
+                  El equipo ganador se llevará la mayor parte del premio en
+                  metálico, además del trofeo y el reconocimiento como los
+                  mejores jugadores de LoL del mundo.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card" id="card-experience">
+            <div class="card-inner">
+              <div class="card-front">
+                <h3>Experiencia</h3>
+              </div>
+              <div class="card-back">
+                <p>
+                  Disfruta de increíbles actuaciones musicales, conoce a tus
+                  jugadores favoritos y vive la emoción del LoL como nunca
+                  antes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Comprar Ticket para la Final</h2>
+        <form id="paymentForm">
+          <input type="text" placeholder="Nombre" required />
+          <input type="email" placeholder="Email" required />
+          <input type="text" placeholder="Número de Tarjeta" required />
+          <input
+            type="text"
+            placeholder="Fecha de Expiración (MM/YY)"
+            required
+          />
+          <input type="text" placeholder="CVV" required />
+          <button type="submit">Pagar</button>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 LoL World Championship. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+      // ======== definir elementos ======== //
+      const modal = document.getElementById("paymentModal");
+      const buyButton = document.querySelector(".buy-btn");
+      const closeBtn = document.querySelector(".close");
+      const paymentForm = document.getElementById("paymentForm");
+
+      buyButton.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      closeBtn.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      paymentForm.onsubmit = function (e) {
+        e.preventDefault();
+        alert("¡Compra realizada con éxito! Gracias por tu compra.");
+        modal.style.display = "none";
+      };
+
+      //============= TEMPORIZADOR HASTA 2 DE NOVIEMBRE =====================//
+
+      const countdownElement = document.getElementById("countdown");
+      const eventDate = new Date("2024-11-02T14:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        //===== si ya acabó =======//
+        if (distance < 0) {
+          const timePassed = Math.abs(distance);
+          const days = Math.floor(timePassed / (1000 * 60 * 60 * 24));
+          countdownElement.innerHTML = `El evento ocurrió hace ${days} día${
+            days !== 1 ? "s" : ""
+          }.`;
+        } else {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          countdownElement.innerHTML = `Faltan: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+      }
+
+      setInterval(updateCountdown, 1000);
+      updateCountdown(); // Initial call to avoid delay
+    </script>
+  </body>
+</html>
