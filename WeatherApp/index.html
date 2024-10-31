@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App - Anabel Martínez Perdomo</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #3d6cb9, #00fff0);
+        overflow: hidden;
+        /* movimiento ligero de fondo */
+        animation: gradientMove 1s ease infinite;
+      }
+      #cityName {
+        color: #ffffff;
+      }
+      #weatherDescription,
+      #windSpeed {
+        color: #ffffff;
+      }
+      .card {
+        background: linear-gradient(180deg, #26baee, #68d9f5);
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 90%;
+        max-width: 450px;
+        backdrop-filter: blur(15px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #ffffff;
+      }
+
+      .search {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      input {
+        flex-grow: 1;
+        padding: 12px;
+        font-size: 16px;
+        border: 2px solid #55968f;
+        border-radius: 5px 0 0 5px;
+        transition: border-color 0.3s;
+      }
+
+      input:focus {
+        border-color: #3e746e;
+        outline: none;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 16px;
+        background-color: #8acbbb;
+        color: black;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #438b79;
+      }
+
+      .error {
+        color: #ff4800;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .weather {
+        text-align: center;
+      }
+
+      .gauges {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .gauge {
+        position: relative;
+        width: 45%;
+        height: 90px;
+      }
+
+      .gauge svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .gauge-value {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+      .gauge-label {
+        position: absolute;
+        bottom: -25px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 14px;
+        color: #ffffff;
+      }
+
+      .gauge-min,
+      .gauge-max {
+        position: absolute;
+        top: 0;
+        font-size: 12px;
+        color: #ffffff;
+      }
+
+      .gauge-min {
+        left: 0;
+      }
+
+      .gauge-max {
+        right: 0;
+      }
+
+      .weather-icon {
+        width: 64px;
+        height: 64px;
+        margin-right: 10px;
+      }
+
+      .weather-description {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 600px) {
+        .gauges {
+          flex-direction: column;
+          align-items: center;
+        }
+        .gauge {
+          width: 100%;
+          margin-top: 30px;
+          margin-bottom: 30px;
+        }
+        /* En mobile sin animaciones */
+        .card {
+          transition: none;
+        }
+        .card:hover {
+          transform: none;
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+      }
+      /* animación de movimiento de fondo */
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Weather App</h1>
+      <div class="search">
+        <input type="text" placeholder="Enter city name" id="cityInput" />
+        <button onclick="checkWeather()">Search</button>
+      </div>
+      <!-- para los mensajes de error -->
+      <div id="error" class="error"></div>
+      <!-- El tiempo una vez se busca -->
+      <div id="weather" class="weather" style="display: none">
+        <h2 id="cityName"></h2>
+        <!-- MEDIDORES DE TEMPERATURA SVG-->
+        <div class="gauges">
+          <!-- MEDIDOR TEMPERATURA -->
+          <div class="gauge">
+            <svg viewBox="0 0 100 50">
+              <path
+                d="M 5 50 A 45 45 0 0 1 95 50"
+                fill="none"
+                stroke="#e0e0e0"
+                stroke-width="10"
+              />
+              <path
+                id="tempGauge"
+                d="M 5 50 A 45 45 0 0 1 95 50"
+                fill="none"
+                stroke="#ffc001"
+                stroke-width="10"
+                stroke-dasharray="141.37"
+                stroke-dashoffset="141.37"
+              />
+            </svg>
+            <div class="gauge-value" id="tempValue"></div>
+            <div class="gauge-label">🌡 Temperature</div>
+            <div class="gauge-min">-20°C</div>
+            <div class="gauge-max">50°C</div>
+          </div>
+          <!-- MEDIDOR HUMEDAD -->
+          <div class="gauge">
+            <svg viewBox="0 0 100 50">
+              <path
+                d="M 5 50 A 45 45 0 0 1 95 50"
+                fill="none"
+                stroke="#e0e0e0"
+                stroke-width="10"
+              />
+              <path
+                id="humidityGauge"
+                d="M 5 50 A 45 45 0 0 1 95 50"
+                fill="none"
+                stroke="#4b8dbd"
+                stroke-width="10"
+                stroke-dasharray="141.37"
+                stroke-dashoffset="141.37"
+              />
+            </svg>
+            <div class="gauge-value" id="humidityValue"></div>
+            <div class="gauge-label">💧 Humidity</div>
+            <div class="gauge-min">0%</div>
+            <div class="gauge-max">100%</div>
+          </div>
+        </div>
+        <div class="weather-description">
+          <img
+            id="weatherIcon"
+            class="weather-icon"
+            src=""
+            alt="Weather icon"
+          />
+          <p id="weatherDescription"></p>
+        </div>
+        <p id="windSpeed"></p>
+      </div>
+    </div>
+
+    <script>
+      const apiKey = "a7a6acf4bb38c97fe6bfa1a3c782bd77";
+      const apiUrl =
+        "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+      async function checkWeather() {
+        const cityInput = document.getElementById("cityInput");
+        const city = cityInput.value;
+
+        if (!city) {
+          showError("Please enter a city name");
+          return;
+        }
+
+        try {
+          const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+          if (!response.ok) throw new Error("City not found");
+          const data = await response.json();
+          displayWeather(data);
+        } catch (err) {
+          showError("City not found. Please try again.");
+        }
+      }
+      // Función mostrar error
+      function showError(message) {
+        const errorDiv = document.getElementById("error");
+        errorDiv.textContent = message;
+        document.getElementById("weather").style.display = "none";
+      }
+      // Función para mostrar el tiempo
+      function displayWeather(data) {
+        document.getElementById("error").textContent = "";
+        document.getElementById("weather").style.display = "block";
+        document.getElementById("cityName").textContent = data.name;
+
+        // Modificar el semicirculo en función de la temperatura y humedad
+        updateGauge("tempGauge", "tempValue", data.main.temp, -20, 50, "°C");
+        updateGauge(
+          "humidityGauge",
+          "humidityValue",
+          data.main.humidity,
+          0,
+          100,
+          "%"
+        );
+
+        // obtener iconos del tiempo
+        document.getElementById(
+          "weatherIcon"
+        ).src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+        document.getElementById("weatherDescription").textContent =
+          data.weather[0].description;
+        document.getElementById(
+          "windSpeed"
+        ).textContent = `🍃 ༄ Wind Speed: ${data.wind.speed} km/h`;
+      }
+      // Función modificar semicírculos
+      function updateGauge(gaugeId, valueId, value, min, max, unit) {
+        const percentage = ((value - min) / (max - min)) * 100;
+        const dashOffset = 141.37 - (141.37 * percentage) / 100;
+        document.getElementById(gaugeId).style.strokeDashoffset = dashOffset;
+        document.getElementById(valueId).textContent = `${Math.round(
+          value
+        )}${unit}`;
+      }
+
+      document
+        .getElementById("cityInput")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            checkWeather();
+          }
+        });
+    </script>
+  </body>
+</html>
