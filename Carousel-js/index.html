@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anabel Martínez Perdomo</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="./js/script.js" defer></script>
+  </head>
+  <body>
+    <video autoplay muted loop id="videoPizza">
+      <source src="./assets/video/Pizza.mp4" />
+    </video>
+
+    <!-- Título principal -->
+    <header class="main-header">
+      <h1 class="page-title">Te damos la bienvenida a Pinza Rollers</h1>
+    </header>
+
+    <!-- Botón del carrito -->
+    <div id="cartButton" class="cart-button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        width="30"
+        height="30"
+      >
+        <path
+          d="M6 6h15l-1.68 8.39a2 2 0 01-1.97 1.61H8.65a2 2 0 01-1.97-1.61L6 6z"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+        <circle cx="9" cy="20" r="1" fill="currentColor"></circle>
+        <circle cx="18" cy="20" r="1" fill="currentColor"></circle>
+      </svg>
+    </div>
+
+    <div class="carousel-container">
+      <!-- Carrusel -->
+      <div class="carousel-wrapper">
+        <div class="carousel" id="carousel"></div>
+        <button class="carousel-btn prev" id="prevProducto">‹</button>
+        <button class="carousel-btn next" id="nextProducto">›</button>
+      </div>
+    </div>
+
+    <!-- Carrito -->
+    <div id="cart" class="cart">
+      <button id="close-cart" class="close-cart-button">×</button>
+      <h2>Carrito (<span id="cart-count">0</span>)</h2>
+      <ul id="cart-items"></ul>
+      <div id="discount-section">
+        <input
+          id="discount-code"
+          type="text"
+          placeholder="Código de Descuento"
+        />
+        <button id="apply-discount">Aplicar</button>
+        <p id="discount-message"></p>
+      </div>
+      <p id="total-price">Total: 0.00€</p>
+      <button id="clear-cart">Vaciar Carrito</button>
+      <button id="checkout">Ir a Pagar</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <p>© 2024 - Anabel Martínez Perdomo</p>
+    </footer>
+  </body>
+</html>
